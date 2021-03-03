@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <meta charset="UTF-8">
+    <div th:replace="fragments/head :: head"></div>
+</head>
+<body>
+<div th:replace="fragments/navbar :: navbar"></div>
+
+
+<div class="container">
+    <h3 th:text="${question.title}"></h3>
+    <h5 th:text="${question.questionText}"></h5>
+    <a class="btn btn-primary" th:href="@{/quiz/admin/editQuiz/__${question.quiz.id}__}">Return</a>
+    <br/>
+    <br/>
+    <h3>Update Answers</h3>
+
+        <div class="form-group">
+            <ul>
+               <li th:each="answer: ${question.answers}">
+                   <form name="answers" th:action="@{/question/admin/__${question.id}__/editAnswer/__${answer.id}__}" method="post">
+                   <input name="text" th:value="${answer.text}" required="true">
+                   <input name="correct" type="checkbox" th:checked="${answer.correct}">
+                   <button type="submit" class="btn btn-primary">Edit Answer</button>
+                   <a class="btn btn-danger" th:href="@{/question/admin/__${question.id}__/deleteAnswer/__${answer.id}__}">DELETE</a>
+                   </form>
+                   <br/>
+               </li>
+                <li>
+                    <form name="answers" th:action="@{/question/admin/__${question.id}__/addAnswer}" method="post">
+                    <input name="text" required="true">
+                    <input name="correct" type="checkbox">
+                    <button class="btn btn-primary">Add Answer</button>
+                    </form>
+                </li>
+            </ul>
+        </div>
+</div>
+</body>
+</html>

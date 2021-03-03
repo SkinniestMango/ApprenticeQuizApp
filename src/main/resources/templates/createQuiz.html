@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <meta charset="UTF-8">
+    <div th:replace="fragments/head :: head"></div>
+</head>
+<body>
+
+<div th:replace="fragments/navbar :: navbar"></div>
+
+<div class="container">
+    <form name="f" th:action="@{/quiz/admin/create}" method="POST" class="form">
+        <label>Quiz Name</label>
+        <input name="name" class="form-control" required="true" autofocus="true">
+        <br/>
+        <label>Quiz Description</label>
+        <input name="description" class="form-control" required="true">
+        <br/>
+        <button class="btn btn-primary" type="submit">Create</button>
+    </form>
+</div>
+
+</body>
+</html>

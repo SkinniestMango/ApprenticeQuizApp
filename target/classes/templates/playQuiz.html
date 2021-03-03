@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <meta charset="UTF-8">
+    <div th:replace="fragments/head :: head"></div>
+</head>
+<body>
+
+<div th:replace="fragments/navbar :: navbar"></div>
+
+<form th:action="@{/quiz/play/__${quiz.id}__/submitQuizAnswers}">
+    <div class="container">
+    <div class="container">
+        <ol type="1">
+            <li th:each="question: ${quiz.questions}">
+                <div>
+                    <h3 th:text="${question.title}">Example Question</h3>
+                    <h5 th:text="${question.questionText}">Example of the text from a question</h5>
+                </div>
+
+                <div>
+                    <ol type="A">
+                        <li th:each="answer: ${question.answers}">
+                            <span th:text="${answer.text}"></span>
+                            <input type="radio" th:name="${answer.question.id}" th:id="${answer.id}" th:value="${answer.id}">
+                            <span sec:authorize="hasAnyRole('ROLE_TEACHER','ROLE_ADMIN')" th:if="${answer.correct}">Correct Answer</span>
+                        </li>
+                    </ol>
+                </div>
+                <br/>
+            </li>
+        </ol>
+    </div>
+    <button type="submit" value="Submit" class="btn btn-primary">Submit Answers</button>
+    </div>
+</form>
+<br/>
+</body>
+</html>

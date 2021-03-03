@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <meta charset="ISO-8859-1">
+    <div th:replace="fragments/head :: head"></div>
+
+</head>
+<body>
+
+<!-- Inserting Navbar -->
+<div th:replace="fragments/navbar :: navbar"></div>
+
+<br>
+<br>
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-4 mt-1" th:each="quiz: ${quizzes}">
+            <div class="card h-100">
+                <div class="card-header" th:text="${quiz.name}">Card title</div>
+                <div class="card-body">
+                    <p class="card-text" th:text="${quiz.description}">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                    <a class="btn btn-primary" th:href="@{/quiz/play/}+${quiz.id}">Start</a>
+                    <a class="btn btn-primary" sec:authorize="hasAuthority('ROLE_ADMIN')" th:href="@{/quiz/admin/editQuiz/}+${quiz.id}">Edit</a>
+                    <a class="btn btn-danger" sec:authorize="hasAuthority('ROLE_ADMIN')" th:href="@{/quiz/admin/deleteQuiz/}+${quiz.id}">DELETE</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-4 mt-1" sec:authorize="hasAuthority('ROLE_ADMIN')">
+                <div class="card h-100">
+                    <div class="card-header">Create a new Quiz</div>
+                    <div class="card-body">
+                        <p class="card-text">Would you like to create a new Quiz?</p>
+                        <a href="#" class="btn btn-primary" th:href="@{/quiz/admin/create}">Create New</a>
+                    </div>
+                </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
